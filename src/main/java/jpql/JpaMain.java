@@ -18,14 +18,16 @@ public class JpaMain {
             member.setUsername("member1");
             em.persist(member);
 
-            TypedQuery<Member> query = em.createQuery("select m from Member m", Member.class);
+            Member result = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                    .setParameter("username", "member1")
+                    .getSingleResult();
 
-            List<Member> resultList = query.getResultList(); //반환타입이 여러개일 때는 .getResultList()
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1);
-            }
+            //위치기반 바인딩 사용하지말기
+//            Member result = em.createQuery("select m from Member m where m.username = ?1", Member.class)
+//                    .setParameter(1 "member1")
+//                    .getSingleResult();
 
-            Query query3 = em.createQuery("select m.username, m.age from Member m"); //타입 정보를 받을 수 없을 때
+            System.out.println("singleResult = " + result.getUsername());
 
 
             tx.commit();
