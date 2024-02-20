@@ -2,8 +2,6 @@ package jpql;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -21,10 +19,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Member> result = em.createQuery("select m.team from Member m", Member.class)
+            em.createQuery("select o.address from Order o", Address.class)
                     .getResultList();
-            Member findMember = result.get(0);
-            findMember.setAge(20);
 
             tx.commit();
         } catch (Exception e) {
