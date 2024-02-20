@@ -2,6 +2,8 @@ package jpql;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -19,9 +21,12 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            em.createQuery("select m.username, m.age from Member m") //타입을 빼야함
+            List<MemberDTO> result = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
                     .getResultList();
 
+            MemberDTO memberDTO = result.get(0);
+            System.out.println("memberDTO = " + memberDTO.getUsername());
+            System.out.println("memberDTO = " + memberDTO.getAge());
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
