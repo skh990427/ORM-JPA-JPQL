@@ -27,7 +27,7 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m inner join m.team t"; //inner는 생략 가능
+            String query = "select m from Member m left outer join m.team t"; //outer는 생략가능
             List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
 
