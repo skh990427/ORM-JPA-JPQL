@@ -25,8 +25,8 @@ public class JpaMain {
             em.clear();
 
             List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(10)
+                    .setFirstResult(0) //어디서부터 가져올 건지
+                    .setMaxResults(10) //데이터는 몇개를 가져올건지
                     .getResultList();
 
             System.out.println("result = " + result.size());
