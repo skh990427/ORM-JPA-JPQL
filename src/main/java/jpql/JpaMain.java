@@ -13,26 +13,23 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
 
-            for (int i = 0; i < 100; i++) {
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Member member = new Member();
+            member.setUsername("member");
+            member.setAge(10);
+            member.setTeam(team);
+
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
-                    .setFirstResult(0) //어디서부터 가져올 건지
-                    .setMaxResults(10) //데이터는 몇개를 가져올건지
+            String query = "select m from Member m inner join m.team t"; //inner는 생략 가능
+            List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
-
-            System.out.println("result = " + result.size());
-            for (Member member1 : result) {
-                System.out.println("member1 = " + member1.toString());
-            }
 
             tx.commit();
         } catch (Exception e) {
