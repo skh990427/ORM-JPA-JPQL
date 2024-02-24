@@ -18,6 +18,14 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
+    public MemberType getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(MemberType memberType) {
+        this.memberType = memberType;
+    }
+
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
