@@ -29,8 +29,7 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select concat('a', 'b') From Member m"; //표준
-//            String query1 = "select 'a' || 'b' From Member m"; //이건 하이버네이트가 지원하는 문법
+            String query = "select substring(m.username, 2, 3) From Member m";
 
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
