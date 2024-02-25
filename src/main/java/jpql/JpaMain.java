@@ -29,7 +29,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select nullif(m.username, '관리자') from Member m"; //사용자 이름이 '관리자'면 null 반환
+            String query = "select concat('a', 'b') From Member m"; //표준
+//            String query1 = "select 'a' || 'b' From Member m"; //이건 하이버네이트가 지원하는 문법
 
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
