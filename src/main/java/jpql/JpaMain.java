@@ -29,12 +29,12 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select size(t.members) from Team t";
+            String query = "select m.team from Member m";
 
-            List<Integer> result = em.createQuery(query, Integer.class)
+            List<Team> result = em.createQuery(query, Team.class)
                     .getResultList();
 
-            for (Integer s : result) {
+            for (Team s : result) {
                 System.out.println("s = " + s);
             }
 
