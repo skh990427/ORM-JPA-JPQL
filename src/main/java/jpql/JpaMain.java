@@ -46,11 +46,14 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select distinct t From Team t join fetch t.members";
-            //SQL의 입장에서 멤버의 값이 다르기때문에 distinct가 적용이 안됨
-            //JPA에서는 추가로 애플리케이션에서 중복 제거를 해버린다.
+            String query = "select t From Team t";
+            //fetch 조인에서는 조인 대상에서 별칭을 줄 수 없다.
+            //둘 이상의 컬렉션은 fetch 조인할 수 없다.
+            //컬렌션을 fetch 조인하면 페이징 API를 사용할 수 없다.
 
             List<Team> result = em.createQuery(query, Team.class)
+                    .setFirstResult(0)
+                    .setMaxResults(2)
                     .getResultList();
 
             for (Team team : result) {
