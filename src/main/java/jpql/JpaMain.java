@@ -46,7 +46,9 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select t From Team t join fetch t.members";
+            String query = "select distinct t From Team t join fetch t.members";
+            //SQL의 입장에서 멤버의 값이 다르기때문에 distinct가 적용이 안됨
+            //JPA에서는 추가로 애플리케이션에서 중복 제거를 해버린다.
 
             List<Team> result = em.createQuery(query, Team.class)
                     .getResultList();
