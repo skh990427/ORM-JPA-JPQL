@@ -46,10 +46,10 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m where m = :member";
+            String query = "select m from Member m where m.id = :memberId";
 
             Member findMember = em.createQuery(query, Member.class)
-                    .setParameter("member", member1)
+                    .setParameter("memberId", member1.getId())
                     .getSingleResult();
 
             System.out.println("findMember = " + findMember);
