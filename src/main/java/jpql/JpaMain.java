@@ -46,13 +46,10 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
-                    .setParameter("username", "회원1")
-                    .getResultList();
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate(); //excuteUpdate()는 영향을 받은 엔티티 수를 반환한다.
 
-            for (Member member : resultList) {
-                System.out.println("member = " + member);
-            }
+            System.out.println("resultCount = " + resultCount);
 
             tx.commit();
         } catch (Exception e) {
